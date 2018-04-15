@@ -20,7 +20,7 @@ if (isset($_SESSION["sessionid"]) == FALSE){
     echo "<form action = 'login.php' method = 'POST'>";
     echo "<p>Username: <input type = 'username' name = 'username'></p>";
     echo "<p>Password: <input type = 'password' name = 'password'></p>";
-    echo "<input type = 'submit' name = 'submit' value = 'submit'>";
+    echo "<input type = 'submit' name = 'login' value = 'login'>";
     echo "<input type = 'submit' name = 'register' value = 'register'>";
     echo "</form>";
 } else {
