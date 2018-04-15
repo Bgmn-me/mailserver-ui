@@ -5,12 +5,17 @@ session_start();
 <html>
 <body>
 <?php
-if($_POST["username"] == "Dominik" && $_POST["password"] == "Test"){
 
-    echo "Login successfully!";
-    echo "<a href = './'>zurück</a>";
-    $_SESSION["sessionid"] = 001;
+if (isset($_POST["username"]) && isset($_POST["password"])) {
+    if ($_POST["username"] == "Dominik" && $_POST["password"] == "Test") {
+        header("Location: ../?msg=Du%20wurdest%20eingeloggt!");
+        $_SESSION["sessionid"] = 001;
+    }
+} else {
+    header("Location: ../?msg=Invalid%20request");
 }
+
+
 ?>
 </body>
 </html>
