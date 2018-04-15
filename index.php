@@ -16,15 +16,12 @@ if (isset($_GET["msg"])) {
     echo "<h3>".$_GET["msg"]."</h3>";
 }
 
-if (isset($_SESSION["sessionid"]) == FALSE){
-    echo "<form action = 'login.php' method = 'POST'>";
-    echo "<p>Username: <input type = 'username' name = 'username'></p>";
-    echo "<p>Password: <input type = 'password' name = 'password'></p>";
-    echo "<input type = 'submit' name = 'login' value = 'login'>";
-    echo "<input type = 'submit' name = 'register' value = 'register'>";
-    echo "</form>";
+if (isset($_SESSION["sessionid"]) == FALSE) {
+    echo '<a href="login.php">Login</a> ';
+    echo '<a href="register.php">Registrieren</a>';
 } else {
-    echo "Sie sind eingeloggt!";
+    echo "<p>Sie sind eingeloggt!</p>";
+    echo "<a href='logoff.php'>Ausloggen</a>";
 }
 ?>
 </body>
