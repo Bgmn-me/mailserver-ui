@@ -12,15 +12,17 @@ session_start();
 
 <?php
 
-if (isset($_GET["msg"])) {
-    echo "<h3>".$_GET["msg"]."</h3>";
+if (isset($_SESSION["msg"])) {
+    echo "<h3>".$_SESSION["msg"]."</h3>";
+    $_SESSION["msg"] = null;
 }
 
 if (isset($_SESSION["sessionid"]) == FALSE) {
+    echo "<h3>Sie sind nicht eingeloggt!</h3>";
     echo '<a href="login.php">Login</a> ';
     echo '<a href="register.php">Registrieren</a>';
 } else {
-    echo "<p>Sie sind eingeloggt!</p>";
+    echo "<h3>Sie sind eingeloggt!</h3>";
     echo "<a href='logoff.php'>Ausloggen</a>";
 }
 ?>

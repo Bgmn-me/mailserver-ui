@@ -1,12 +1,13 @@
 <?php 
-
 session_start();
 
 if (isset($_SESSION["sessionid"]) == FALSE) {
-  header("Location: ./?msg=" . htmlspecialchars("Du musst eingeloggt sein, um dich auszuloggen zu können!"));
+  $_SESSION["msg"] = "Du musst eingeloggt sein, um dich auszuloggen zu können!";
+  header("Location: ../");
+  exit();
 } else {
   session_destroy();
-  header("Location: ./?msg=" . htmlspecialchars("Du wurdest ausgeloggt!"));
+  header("Location: ../");
   exit();
 }
 

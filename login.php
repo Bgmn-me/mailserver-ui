@@ -9,16 +9,19 @@ session_start();
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     if ($_POST["username"] == "Dominik" && $_POST["password"] == "Test") {
         $_SESSION["sessionid"] = 001;
-        header("Location: ../?msg=" . htmlspecialchars("Du wurdest eingeloggt!"));
+        $_SESSION["msg"] = "Du wurdest eingeloggt!";
+        header("Location: ../");
         exit();
     } else {
-        header("Location: ../?msg=" . htmlspecialchars("Falsche Logindaten!")); //Falscher Benutzername Passwort!
+        $_SESSION["msg"] = "Falsche Logindaten!";
+        header("Location: ../");
         exit();
     }
 }
 
 if (isset($_SESSION["sessionid"])) {
-    header("Location: ../?msg=Du%20bist%20bereits%20eingeloggt!");
+    $_SESSION["msg"] = "Du bist bereits eingeloggt!";
+    header("Location: ../");
     exit();
 }
 
