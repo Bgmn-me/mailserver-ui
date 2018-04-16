@@ -33,7 +33,6 @@ if (password_verify("Hello", $password) == TRUE){
                 <option value = "men">Mann</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
-<p>Username: <input type = "username" name = "username"></p>
 <p>Geburtsdatum: 
 <select name = "birthday">
 <?php
@@ -64,6 +63,7 @@ for($year=1970;$year <= 2018;$year++){
 </select>
 </P>
 <p id = "output"></p>
+<p>Username: <input type = "username" name = "username"></p>
 <p>Password: <input type = "password" name = "password"></p>
 <p>Password wiederholen: <input type = "password" name = "password"></p>
 <input type = "submit" name = "submit" value = "Einloggen">
