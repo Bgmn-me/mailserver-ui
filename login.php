@@ -9,10 +9,10 @@ session_start();
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     if ($_POST["username"] == "Dominik" && $_POST["password"] == "Test") {
         $_SESSION["sessionid"] = 001;
-        header("Location: ../?msg=Du%20wurdest%20eingeloggt!");
+        header("Location: ../?msg=" . htmlspecialchars("Du wurdest eingeloggt!"));
         exit();
     } else {
-        header("Location: ../?msg=Falscher%20Benutzername%2FPasswort!");
+        header("Location: ../?msg=" . htmlspecialchars("Falsche Logindaten!")); //Falscher Benutzername Passwort!
         exit();
     }
 }
