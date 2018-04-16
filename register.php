@@ -34,7 +34,7 @@ if (password_verify("Hello", $password) == TRUE){
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
 <p>Geburtsdatum: 
-<select name = "birthday">
+<select name = "birthday" onchange = "onBirthDate(0,this.value)">
 <?php
 for($day=1;$day <= 31;$day++){
     if ($day <= 9){
@@ -54,7 +54,7 @@ for($month=1;$month <= 12;$month++){
 }
 ?>
 </select>
-<select name = "birthyear">
+<select name = "birthyear" onchange = "onBirthDate(2,this.value)">
 <?php
 for($year=1970;$year <= 2018;$year++){
     echo "<option value = '" . $year . "'>" . $year . "</option>";
