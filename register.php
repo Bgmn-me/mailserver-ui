@@ -26,7 +26,7 @@ if (password_verify("Hello", $password) == TRUE){
     echo "Hah, verkackt";
 }
 ?>
-<form action = "./login" method = "POST">
+<form name = "register" action = "./login" method = "POST">
 <p>Anrede:  <select name = "salutation">
                 <option value = "FALSE">-- Bitte auswählen --</option>
                 <option value = "women">Frau</option>
@@ -40,7 +40,7 @@ for($day=1;$day <= 31;$day++){
     if ($day <= 9){
         $day = "0" . $day;
     }
-    echo "<option value = '" . $day . "'>" . $day . ".</option>";
+    echo "<option id = 'bday" . $day . "'value = '" . $day . "'>" . $day . ".</option>";
 }
 ?>
 </select>
@@ -68,6 +68,6 @@ for($year=1970;$year <= 2018;$year++){
 <p>Password wiederholen: <input type = "password" name = "password"></p>
 <input type = "submit" name = "submit" value = "Einloggen">
 </form>
-<script src = "/projects/mail/JS/javascript.js"></script>
+<script src = "/projects/mailserver-ui/js/javascript.js"></script>
 </body>
 </html>
