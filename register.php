@@ -45,31 +45,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION["msg"] = "Passwörter stimmen nicht überein!";
     } else {
         $password = $_POST["password"];
+        $rng = new CSPRNG(TRUE);
+        $salt = $rng->GenerateString(60);
+        $options = [
+            'cost' => 8,
+            'salt' => $salt,
+        ];
+        $password = password_hash($password, PASSWORD_BCRYPT, $options);
     }
+    
+    $sqlacc = "INSERT INTO accounts (username, domain, passwort, salt) VALUES ('" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
+    $sqluser = "INSERT INTO users (salutation, username, lastname, firstname, birthdate) VALUES ('" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $username . "')";
+    $conn->query($sqlacc);
+    $conn->query($sqluser);
 }
-
-
-$rng = new CSPRNG(TRUE);
-$str = $rng->GenerateString(60);
-echo "Salt: " . $str . "<br>";
-$options = [
-    'cost' => 8,
-    'salt' => $str,
-];
-$password = password_hash("Hello", PASSWORD_BCRYPT, $options);
-echo "Passwort: " . $password . "<br>";
-if (password_verify("Hello", $password) == TRUE){
- echo "Yeah, Richtiges Passwort";
-} else {
-    echo "Hah, verkackt";
-}
-$sql = "INSERT INTO accounts (salutation, lastname, firstname, birthdate, username, domain, passwort, salt) VALUES ('" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
 ?>
 <form name = "register" action = "./login" method = "POST">
 <p>Anrede:  <select name = "salutation">
                 <option value = "FALSE">-- Bitte auswählen --</option>
-                <option value = "women">Frau</option>
-                <option value = "men">Mann</option>
+                <option value = "frau">Frau</option>
+                <option value = "mann">Mann</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
 <p>Geburtsdatum: 
