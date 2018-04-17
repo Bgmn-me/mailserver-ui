@@ -1,5 +1,7 @@
 <?php
 session_start();
+require_once "CSPRNG/random.php";
+require_once "./dbconnect.php"
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,7 +12,43 @@ session_start();
 <body>
 
 <?php
-require_once "CSPRNG/random.php";
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(empty($_POST["salutation"])){
+        $_SESSION["msg"] = "Anrede darf nicht Leer sein!";
+        header("Location: ../");
+    } else {
+        $salutation = $_POST["salutation"];
+    }
+    if(empty($_POST["firstname"])){
+        $_SESSION["msg"] = "Vorname darf nicht Leer sein!";
+    } else {
+        $firstname = $_POST["firstname"];
+    }
+    if(empty($_POST["lastname"])){
+        $_SESSION["msg"] = "Nachname darf nicht Leer sein!";
+    } else {
+        $lastname = $_POST["lastname"];
+    }
+    if(empty($_POST["username"])){
+        $_SESSION["msg"] = "Username darf nicht Leer sein!";
+    } else {
+        $username = $_POST["username"];
+    }
+    if($_POST["domain"] == FALSE){
+        $_SESSION["msg"] = "Bitte Domain auswählen!";
+    } else {
+        $domain = $_POST["domain"];
+    }
+    if(empty($_POST["password"])){
+        
+    } else if ($_POST["password"] != $_POST["password2"]) {
+        $_SESSION["msg"] = "Passwörter stimmen nicht überein!";
+    } else {
+        $password = $_POST["password"];
+    }
+}
+
+
 $rng = new CSPRNG(TRUE);
 $str = $rng->GenerateString(60);
 echo "Salt: " . $str . "<br>";
@@ -25,6 +63,7 @@ if (password_verify("Hello", $password) == TRUE){
 } else {
     echo "Hah, verkackt";
 }
+$sql = "INSERT INTO accounts (salutation, lastname, firstname, birthdate, username, domain, passwort, salt) VALUES ('" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
 ?>
 <form name = "register" action = "./login" method = "POST">
 <p>Anrede:  <select name = "salutation">
@@ -65,7 +104,7 @@ for($year=1970;$year <= 2018;$year++){
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
 <p>Password: <input type = "password" name = "password"></p>
-<p>Password wiederholen: <input type = "password" name = "password"></p>
+<p>Password wiederholen: <input type = "password" name = "password2"></p>
 <input type = "submit" name = "submit" value = "Einloggen">
 </form>
 <script src = "/projects/mailserver-ui/js/javascript.js"></script>
