@@ -5,7 +5,7 @@ session_start();
 <html>
 <head><title>Domain - Bgmn.me</title></head>
 <?php
-if(isset($_SERVER["REQUEST_METHOD"] == "POST"){
+if(isset($_SERVER["REQUEST_METHOD"]) == "POST"){
     $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
     if ($conn->query($sql) === TRUE){
         $text = "New Record created successfully";
