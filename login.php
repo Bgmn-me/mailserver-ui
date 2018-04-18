@@ -9,13 +9,13 @@ require_once "./dbconnect.php" ;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty($_POST["username"])){
-        $_SESSION["msg"] = "Username darf nicht leer sein!";
+        $_SESSION["msg"] = "Bitte Username eingeben!";
         header("Location: ../");
     } else {
         $username = $_POST["username"];
     }
     if(empty($_POST["password"])){
-        $_SESSION["msg"] = "Passwort darf nicht leer sein!";
+        $_SESSION["msg"] = "Bitte Passwort eingeben!";
         header("Location: ../");
     } else {
         $password = $_POST["password"];
@@ -23,18 +23,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT id, passwort, salt FROM accounts WHERE username = '" . $username . "'";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()){
-        echo "id: " . $row["id"] . ", passwort: " . $row["passwort"] . ", salt: " . $row["salt"];
+        $password_sql = $row["passwort"];
+        $salt = $row["salt"];
+        $id = $row["id"];
     }
-    /*if ($_POST["username"] == "Dominik" && $_POST["password"] == "Test") {
-        $_SESSION["sessionid"] = 001;
-        $_SESSION["msg"] = "Du wurdest eingeloggt!";
-        header("Location: ../");
-        exit();
-    } else {
-        $_SESSION["msg"] = "Falsche Logindaten!";
-        header("Location: ../");
-        exit();
-    }*/
+    $options = [
+        'cost' => 8,
+        'salt' => $salt,
+    ];
+    $passwordhash = password_hash($password, PASSWORD_BCRYPT, $options);
+    if(strlen($password_sql) == strlen($passwordhash)) {
+    $y = 0;
+    $pw_err = false;
+    for($x = 1;$x <= strlen($password_sql);$x++){
+        if(substr($password_sql,$y,$x) != substr($passwordhash,$y,$x)) {
+            $pw_err = true;
+        }
+        $y++;
+
+    }
+}
+if($pw_err != true){
+    $_SESSION["sessionid"] = $id;
+}
 }
 
 if (isset($_SESSION["sessionid"])) {

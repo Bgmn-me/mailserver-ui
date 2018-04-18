@@ -5,19 +5,7 @@ session_start();
 <html>
 <head><title>Domain - Bgmn.me</title></head>
 <?php
-if(isset($_POST["domain"]) == TRUE){
-    $pd = "POST is not empty";
-    echo "<script>console.log('" . $pd . "')</script>";
-    $username = "root";
-    $password = "";
-    $server = "127.0.0.1";
-    $database = "vmail";
-
-    $conn = new  mysqli($server,$username,$password,$database);
-    if($conn->connect_error){
-        die("Connection failed:" . $conn->connect_error);
-    }
-
+if(isset($_SERVER["REQUEST_METHOD"] == "POST"){
     $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
     if ($conn->query($sql) === TRUE){
         $text = "New Record created successfully";
