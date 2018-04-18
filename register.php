@@ -1,21 +1,21 @@
 <?php
 session_start();
 require_once "CSPRNG/random.php";
-require_once "./dbconnect.php"
+require_once "./dbconnect.php";
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Home - Bgmn.me</title>
+<title>Registrieren - Bgmn.me</title>
 <meta charset = "utf8";>
 </head>
 <body>
 
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["salutation"])){
-        $_SESSION["msg"] = "Anrede darf nicht Leer sein!";
-        header("Location: ../");
+    if($_POST["salutation"] == FALSE){
+        $_SESSION["msg"] = "Bitte Anrede auswählen!";
+        header("Location: ../register.php");
     } else {
         $salutation = $_POST["salutation"];
     }
@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION["msg"] = "Bitte Vornamen eingeben!";
     } else if (!preg_match("/^[a-zA-Z]*$/",$_POST["firstname"])) {
         $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
-        header("Location: ../");
+        header("Location: ../register.php");
     } else {
         $firstname = $_POST["firstname"];
     }
@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $_SESSION["msg"] = "Bitte Nachname eingeben!";
     }  else if (!preg_match("/^[a-zA-Z]*$/",$_POST["lastname"])) {
         $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
-        header("Location: ../");
+        header("Location: ../register.php");
     } else {
         $lastname = $_POST["lastname"];
     }
@@ -69,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     $sqlacc = "INSERT INTO accounts (username, domain, passwort, salt) VALUES ('" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
-    $sqluser = "INSERT INTO users (salutation, username, lastname, firstname, birthdate) VALUES ('" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $username . "')";
+    $sqluser = "INSERT INTO users (username, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
     if($conn->query($sqlacc)){
         echo "Funktioniert";
     } else {

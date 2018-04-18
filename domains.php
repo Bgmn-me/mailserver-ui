@@ -3,7 +3,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html>
-<head><title>Mail - Bgmn.me</title></head>
+<head><title>Domain - Bgmn.me</title></head>
 <?php
 if(isset($_POST["domain"]) == TRUE){
     $pd = "POST is not empty";

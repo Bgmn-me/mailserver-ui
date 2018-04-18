@@ -4,7 +4,7 @@ require_once "./dbconnect.php";
 ?>
 <!DOCTYPE html>
 <html>
-<head><title>Mail - Bgmn.me</title></head>
+<head><title>Alias - Bgmn.me</title></head>
 <?php
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
