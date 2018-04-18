@@ -20,19 +20,33 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $salutation = $_POST["salutation"];
     }
     if(empty($_POST["firstname"])){
-        $_SESSION["msg"] = "Vorname darf nicht Leer sein!";
+        $_SESSION["msg"] = "Bitte Vornamen eingeben!";
+    } else if (!preg_match("/^[a-zA-Z]*$/",$_POST["firstname"])) {
+        $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
+        header("Location: ../");
     } else {
         $firstname = $_POST["firstname"];
     }
     if(empty($_POST["lastname"])){
-        $_SESSION["msg"] = "Nachname darf nicht Leer sein!";
+        $_SESSION["msg"] = "Bitte Nachname eingeben!";
+    }  else if (!preg_match("/^[a-zA-Z]*$/",$_POST["lastname"])) {
+        $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
+        header("Location: ../");
     } else {
         $lastname = $_POST["lastname"];
     }
     if(empty($_POST["username"])){
-        $_SESSION["msg"] = "Username darf nicht Leer sein!";
+        $_SESSION["msg"] = "Bitte Username eingeben!";
+    } else if (!preg_match("/^[a-zA-Z0-9_.-]*$/",$_POST["username"])) {
+        $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
+        header("Location: ../");
     } else {
         $username = $_POST["username"];
+    }
+    if(empty($_POST["birthday"]) || empty($_POST["birthmonth"]) || empty($_POST["birthyear"])) {
+        $_SESSION["msg"] = "Bitte Geburtsdatum eingeben!";
+    } else {
+        $birthdate = $_POST["birthyear"] . "-" . $_POST["birthmonth"] . "-" . $_POST["birthmonth"]; 
     }
     if($_POST["domain"] == FALSE){
         $_SESSION["msg"] = "Bitte Domain auswählen!";
@@ -40,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $domain = $_POST["domain"];
     }
     if(empty($_POST["password"])){
-        
+        $SESSION["msg"] = "Bitte Passwort eingeben!";
     } else if ($_POST["password"] != $_POST["password2"]) {
         $_SESSION["msg"] = "Passwörter stimmen nicht überein!";
     } else {
@@ -56,15 +70,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $sqlacc = "INSERT INTO accounts (username, domain, passwort, salt) VALUES ('" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
     $sqluser = "INSERT INTO users (salutation, username, lastname, firstname, birthdate) VALUES ('" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $username . "')";
-    $conn->query($sqlacc);
-    $conn->query($sqluser);
+    if($conn->query($sqlacc)){
+        echo "Funktioniert";
+    } else {
+        echo "Funktioniert doch nicht";
+    }
+    if($conn->query($sqluser)){
+        echo "Funktioniert";
+    } else {
+        echo "Funktioniert doch nicht";
+    }
 }
 ?>
-<form name = "register" action = "./login" method = "POST">
+<form name = "register" action = "./register.php" method = "POST">
 <p>Anrede:  <select name = "salutation">
                 <option value = "FALSE">-- Bitte auswählen --</option>
                 <option value = "frau">Frau</option>
-                <option value = "mann">Mann</option>
+                <option value = "herr">Herr</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
 <p>Geburtsdatum: 
@@ -98,6 +120,16 @@ for($year=1970;$year <= 2018;$year++){
 </P>
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
+<p>Domain:  <select name = "domain">
+            <option value = "FALSE">-- Bitte auswählen --</option>
+            <?php
+            $sql3 = "SELECT id, domain FROM domains";
+            $result = $conn->query($sql3);
+            while ($row = $result->fetch_assoc()){
+                echo "<option value = '" . $row["domain"] . "'>" . $row["domain"] . "</option>";
+            }
+            ?>
+            </select></p>
 <p>Password: <input type = "password" name = "password"></p>
 <p>Password wiederholen: <input type = "password" name = "password2"></p>
 <input type = "submit" name = "submit" value = "Einloggen">

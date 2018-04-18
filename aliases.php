@@ -9,14 +9,16 @@ require_once "./dbconnect.php";
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
         if ($conn->query($sql) === TRUE){
-            $text = "New Record created successfully";
-            echo "<script>console.log('" . $text . "')</script>";
+            $_SESSION["msg"] = "Alias: " . $alias . "erfolgreich hinzugefügt";
+            header("Location: ../");
         } else {
-            echo "error: " . $sql . "<br>" . $conn->error;
+            $_SESSION["msg"] = "Upps, da ist irgendwas schiefgelaufen";
+            header("Location: ../");
         }
         $conn->close();
     } else {
         $_SESSION["msg"] = "Na na na, wie sind wir denn hier gelandet";
+        header("Location: ../");
     }
 ?>
 <body>
