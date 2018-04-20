@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params(10800,TRUE,TRUE);
 session_start();
 require_once "./dbconnect.php";
 ?>

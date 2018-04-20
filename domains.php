@@ -1,28 +1,31 @@
 <?php
+session_set_cookie_params(10800,TRUE,TRUE);
 session_start();
+require_once "./dbconnect.php";
 ?>
 <!DOCTYPE html>
 <html>
 <head><title>Domain - Bgmn.me</title></head>
 <?php
-if(isset($_SERVER["REQUEST_METHOD"]) == "POST"){
+if (empty($_SESSION["sessionid"])) {
+    $_SESSION["msg"] = "Bitte loggen Sie sich ein um diese Seite benutzen zu können!";
+    header("Location: ../");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
     if ($conn->query($sql) === TRUE){
-        $text = "New Record created successfully";
-        echo "<script>console.log('" . $text . "')</script>";
-    }
-    else {
-        echo "error: " . $sql . "<br>" . $conn->error;
+        $_SESSION["msg"] = "Domain wurde erfolgreich hinzugefügt";
+        header("Location: ../");
+    } else {
+        $_SESSION["msg"] = "Es ist ein Fehler aufgetreten!";
+        header("Location: ../domains.php");
     }
     $conn->close();
 }
-else{
-    $pd = "POST is empty";
-    echo "<script>console.log('" . $pd . "')</script>";
-}
 ?>
 <body>
-    <form action="index.php" method="post">
+    <form action="./domains.php" method="post">
         <p>Domain: <input type = "text" name = "domain" /></p>
         <p><input type = "submit" name = "submit" value = "submit" /></p>
     </form>

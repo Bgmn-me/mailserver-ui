@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params(10800,TRUE,TRUE);
 session_start();
 require_once "CSPRNG/random.php";
 require_once "./dbconnect.php";
@@ -70,16 +71,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     $sqlacc = "INSERT INTO accounts (username, domain, passwort, salt) VALUES ('" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
     $sqluser = "INSERT INTO users (username, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
-    if($conn->query($sqlacc)){
+    if($conn->query($sqlacc) && $conn->query($sqluser)){
         echo "Funktioniert";
     } else {
-        echo "Funktioniert doch nicht";
-    }
-    if($conn->query($sqluser)){
-        echo "Funktioniert";
-    } else {
-        echo "Funktioniert doch nicht";
-    }
+        echo "Funktioniert doch nicht, Error: " . $conn->error;
+        }
 }
 ?>
 <form name = "register" action = "./register.php" method = "POST">
@@ -132,7 +128,7 @@ for($year=1970;$year <= 2018;$year++){
             </select></p>
 <p>Password: <input type = "password" name = "password"></p>
 <p>Password wiederholen: <input type = "password" name = "password2"></p>
-<input type = "submit" name = "submit" value = "Einloggen">
+<input type = "submit" name = "submit" value = "Registrieren">
 </form>
 <script src = "/projects/mailserver-ui/js/javascript.js"></script>
 </body>

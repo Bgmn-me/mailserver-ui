@@ -1,4 +1,5 @@
 <?php
+session_set_cookie_params(10800,"","",TRUE,TRUE);
 session_start();
 ?>
 <!DOCTYPE html>
@@ -15,9 +16,10 @@ session_start();
 if (isset($_SESSION["msg"])) {
     echo "<h3>".$_SESSION["msg"]."</h3>";
     $_SESSION["msg"] = null;
+    echo "h3" . $_SESSION["sl"] . "</h3>";
 }
 
-if (isset($_SESSION["sessionid"]) == FALSE) {
+if (empty($_SESSION["sessionid"])) {
     echo "<h3>Sie sind nicht eingeloggt!</h3>";
     echo '<a href="login.php">Login</a> ';
     echo '<a href="register.php">Registrieren</a>';
