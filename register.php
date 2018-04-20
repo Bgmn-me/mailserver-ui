@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params(10800,TRUE,TRUE);
+session_set_cookie_params(3600,"","",TRUE,TRUE);
 session_start();
 require_once "CSPRNG/random.php";
 require_once "./dbconnect.php";
@@ -44,10 +44,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         $username = $_POST["username"];
     }
-    if(empty($_POST["birthday"]) || empty($_POST["birthmonth"]) || empty($_POST["birthyear"])) {
+    if(empty($_POST["birthdate"])) {
         $_SESSION["msg"] = "Bitte Geburtsdatum eingeben!";
     } else {
-        $birthdate = $_POST["birthyear"] . "-" . $_POST["birthmonth"] . "-" . $_POST["birthmonth"]; 
+        $birthdate = $_POST["birthdate"]; 
     }
     if($_POST["domain"] == FALSE){
         $_SESSION["msg"] = "Bitte Domain auswählen!";
@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             'cost' => 8,
             'salt' => $salt,
         ];
-        $password = password_hash($password, PASSWORD_BCRYPT, $options);
+        $password = "{BLF-CRYPT}" . password_hash($password, PASSWORD_BCRYPT, $options);
     }
     
     $sqlacc = "INSERT INTO accounts (username, domain, passwort, salt) VALUES ('" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
@@ -85,35 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <option value = "herr">Herr</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
-<p>Geburtsdatum: 
-<select name = "birthday" onchange = "onBirthDate(0,this.value)">
-<?php
-for($day=1;$day <= 31;$day++){
-    if ($day <= 9){
-        $day = "0" . $day;
-    }
-    echo "<option id = 'bday" . $day . "'value = '" . $day . "'>" . $day . ".</option>";
-}
-?>
-</select>
-<select name = "birthmonth" id = "birthmonth" onchange="onBirthMonth(this.value)">
-<?php
-for($month=1;$month <= 12;$month++){
-    if ($month <= 9){
-        $month = "0" . $month;
-    }
-    echo "<option value = '" . $month ."'>" . $month . ".</option>";
-}
-?>
-</select>
-<select name = "birthyear" onchange = "onBirthDate(2,this.value)">
-<?php
-for($year=1970;$year <= 2018;$year++){
-    echo "<option value = '" . $year . "'>" . $year . "</option>";
-}
-?>
-</select>
-</P>
+<p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
 <p>Domain:  <select name = "domain">
@@ -130,6 +102,5 @@ for($year=1970;$year <= 2018;$year++){
 <p>Password wiederholen: <input type = "password" name = "password2"></p>
 <input type = "submit" name = "submit" value = "Registrieren">
 </form>
-<script src = "/projects/mailserver-ui/js/javascript.js"></script>
 </body>
 </html>
