@@ -113,6 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     //$sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate, straße, plz, stadt, land) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $plz . "','" . $stadt . "','" . $land . "')";
+    $edit = 1;
     $sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
     if($conn->query($sqlacc) && $conn->query($sqluser)){
         echo "Funktioniert";
