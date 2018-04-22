@@ -129,9 +129,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <option value = "herr">Herr</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
-<p>Straße: <input type = "text" name = "street">
+<!--<p>Straße: <input type = "text" name = "street">
 <p>PLZ: <input type = "number"> Ort: <input type = "text" name = "city"></p>
-<p>Land: <input type = "text" name = "country">
+<p>Land: <input type = "text" name = "country">-->
 <p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
