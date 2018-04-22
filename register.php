@@ -22,6 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(empty($_POST["firstname"])){
         $_SESSION["msg"] = "Bitte Vornamen eingeben!";
+        header("Location: ../register.php");
     } else if (!preg_match("/^[a-zA-Z]*$/",$_POST["firstname"])) {
         $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
         header("Location: ../register.php");
@@ -30,14 +31,52 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(empty($_POST["lastname"])){
         $_SESSION["msg"] = "Bitte Nachname eingeben!";
+        header("Location: ../register.php");
     }  else if (!preg_match("/^[a-zA-Z]*$/",$_POST["lastname"])) {
         $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
         header("Location: ../register.php");
     } else {
         $lastname = $_POST["lastname"];
     }
+    /*if(empty($_POST["street"])){
+        $_SESSION["msg"] = "Bitte Straße eingeben!";
+        header("Location: ../register.php");
+    }  else if (!preg_match("/^[a-zA-Z0-9.]*$/",$_POST["street"])) {
+        $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
+        header("Location: ../register.php");
+    } else {
+        $street = $_POST["street"];
+    }
+    if(empty($_POST["postcode"])){
+        $_SESSION["msg"] = "Bitte PLZ eingeben!";
+        header("Location: ../register.php");
+    }  else if (strlen($_POST["postcode"]) > 5 || strlen($_POST["postcode"]) < 5) {
+        $_SESSION["msg"] = "Bitte eine richtige PLZ eingeben!";
+        header("Location: ../register.php");
+    } else {
+        $postcode = $_POST["postcode"];
+    }
+    if(empty($_POST["city"])){
+        $_SESSION["msg"] = "Bitte Stadt eingeben!";
+        header("Location: ../register.php");
+    }  else if (!preg_match("/^[a-zA-Z]*$/",$_POST["city"])) {
+        $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
+        header("Location: ../register.php");
+    } else {
+        $ = $_POST[""];
+    }
+    if(empty($_POST["country"])){
+        $_SESSION["msg"] = "Bitte Land auswählen!";
+        header("Location: ../register.php");
+    }  else if (!preg_match("/^[a-zA-Z]*$/",$_POST["country"])) {
+        $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
+        header("Location: ../register.php");
+    } else {
+        $country = $_POST["country"];
+    }*/
     if(empty($_POST["username"])){
         $_SESSION["msg"] = "Bitte Username eingeben!";
+        header("Location: ../register.php");
     } else if (!preg_match("/^[a-zA-Z0-9_.-]*$/",$_POST["username"])) {
         $_SESSION["msg"] = "Bitte nur Buchstaben verwenden!";
         header("Location: ../");
@@ -46,18 +85,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(empty($_POST["birthdate"])) {
         $_SESSION["msg"] = "Bitte Geburtsdatum eingeben!";
+        header("Location: ../register.php");
     } else {
         $birthdate = $_POST["birthdate"]; 
     }
     if($_POST["domain"] == FALSE){
         $_SESSION["msg"] = "Bitte Domain auswählen!";
+        header("Location: ../register.php");
     } else {
         $domain = $_POST["domain"];
     }
     if(empty($_POST["password"])){
         $SESSION["msg"] = "Bitte Passwort eingeben!";
+        header("Location: ../register.php");
     } else if ($_POST["password"] != $_POST["password2"]) {
         $_SESSION["msg"] = "Passwörter stimmen nicht überein!";
+        header("Location: ../register.php");
     } else {
         $password = $_POST["password"];
         $rng = new CSPRNG(TRUE);
@@ -69,8 +112,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $password = "{BLF-CRYPT}" . password_hash($password, PASSWORD_BCRYPT, $options);
     }
     
-    $sqlacc = "INSERT INTO accounts (username, domain, passwort, salt) VALUES ('" . $username . "','" . $domain . "','" . $password . "','" . $salt . "')";
-    $sqluser = "INSERT INTO users (username, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
+    //$sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate, straße, plz, stadt, land) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $plz . "','" . $stadt . "','" . $land . "')";
+    $sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
     if($conn->query($sqlacc) && $conn->query($sqluser)){
         echo "Funktioniert";
     } else {
@@ -85,6 +128,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <option value = "herr">Herr</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
+<p>Straße: <input type = "text" name = "street">
+<p>PLZ: <input type = "number"> Ort: <input type = "text" name = "city"></p>
+<p>Land: <input type = "text" name = "country">
 <p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
