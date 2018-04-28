@@ -94,16 +94,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
 <p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
 <p>Username: <input type = "username" name = "username"></p>
-<p>Domain:  <select name = "domain">
+<!--<p>Domain:  <select name = "domain">
             <option value = "FALSE">-- Bitte auswählen --</option>
             <?php
-            $sql3 = "SELECT id, domain FROM domains";
+            /*$sql3 = "SELECT id, domain FROM domains";
             $result = $conn->query($sql3);
             while ($row = $result->fetch_assoc()){
                 echo "<option value = '" . $row["domain"] . "'>" . $row["domain"] . "</option>";
-            }
+            }*/
             ?>
-            </select></p>
+            </select></p>-->
 <p>Password: <input type = "password" name = "password"></p>
 <p>Password wiederholen: <input type = "password" name = "password2"></p>
 <input type = "submit" name = "submit" value = "Registrieren">
