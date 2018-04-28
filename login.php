@@ -1,5 +1,5 @@
 <?php
-session_set_cookie_params(10800,TRUE,TRUE);
+session_set_cookie_params(0,"","",TRUE,TRUE);
 session_start();
 require_once "./dbconnect.php" ;
 ?>
@@ -39,7 +39,7 @@ if (isset($_SESSION["sessionid"])) {
     } else {
         $password = $_POST["password"];
     }
-    $sql = "SELECT id, passwort, salt FROM accounts WHERE username = '" . $username . "' AND domain = '" . $domain . "'";
+    $sql = "SELECT id, passwort, salt FROM users WHERE username = '" . $username . "' AND domain = '" . $domain . "'";
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()){
         $password_sql = $row["passwort"];
@@ -59,16 +59,14 @@ if (isset($_SESSION["sessionid"])) {
                 $pw_err = true;
             }
             $y++;
-
         }
     }
     if($pw_err != true){
-        $_SESSION["sessionid"] = $id;
+        $_SESSION["userid"] = $id;
         $_SESSION["msg"] = "Sie sind eingeloggt";
         if(empty($_POST["savelogin"])) {
             $_POST["savelogin"] = false;
         } else {
-            session_set_cookie_params(session.cookie_lifetime, 0);
             $_SESSION["sl"] = "Yes";
         }
         header("Location: ../");
