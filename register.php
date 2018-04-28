@@ -114,7 +114,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     //$sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate, straße, plz, stadt, land) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $plz . "','" . $stadt . "','" . $land . "')";
     $sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
-    if($conn->query($sqlacc) && $conn->query($sqluser)){
         echo "Funktioniert";
     } else {
         echo "Funktioniert doch nicht, Error: " . $conn->error;
@@ -128,9 +127,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <option value = "herr">Herr</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
-<p>Straße: <input type = "text" name = "street">
 <p>PLZ: <input type = "number"> Ort: <input type = "text" name = "city"></p>
-<p>Land: <input type = "text" name = "country">
 <p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
