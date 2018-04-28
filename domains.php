@@ -13,6 +13,7 @@ if (empty($_SESSION["sessionid"])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $edit = 1;
     $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
     if ($conn->query($sql) === TRUE){
         $_SESSION["msg"] = "Domain wurde erfolgreich hinzugefügt";

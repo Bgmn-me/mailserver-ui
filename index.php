@@ -16,7 +16,7 @@ session_start();
 if (isset($_SESSION["msg"])) {
     echo "<h3>".$_SESSION["msg"]."</h3>";
     $_SESSION["msg"] = null;
-    echo "h3" . $_SESSION["sl"] . "</h3>";
+    echo "<h3>" . $_SESSION["sl"] . "</h3>";
 }
 
 if (empty($_SESSION["sessionid"])) {

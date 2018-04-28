@@ -113,6 +113,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     //$sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate, straße, plz, stadt, land) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "','" . $plz . "','" . $stadt . "','" . $land . "')";
+    $edit = 1;
     $sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
     if($conn->query($sqluser)){
         echo "Funktioniert";
@@ -128,6 +129,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <option value = "herr">Herr</option>
             </select>
 <p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
+<<<<<<< HEAD
+=======
+<!--<p>Straße: <input type = "text" name = "street">
+<p>PLZ: <input type = "number"> Ort: <input type = "text" name = "city"></p>
+<p>Land: <input type = "text" name = "country">-->
+>>>>>>> 9f9527e22b4e2eccaf6c3203433971a78aadb58a
 <p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
 <p id = "output"></p>
 <p>Username: <input type = "username" name = "username"></p>
