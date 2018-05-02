@@ -5,29 +5,39 @@ require_once "./dbconnect.php";
 ?>
 <!DOCTYPE html>
 <html>
-<head><title>Alias - Bgmn.me</title></head>
+<head><title>Alias hinzufügen- Bgmn.me</title></head>
 <?php
     if(empty($_SESSION["id"])){
         $_SESSION["msg"] = "Sie müssen eingeloggt sein, um diese Seite Aufrufen zu können!";
         header("Location: ../");
     }
-        if($_SERVER["REQUEST_METHOD"] == "POST"){
-            $edit = 1;
-            $sql = "insert into domains (domain) values ('" . $_POST["domain"] . "')";
-            if ($conn->query($sql) === TRUE){
-                $_SESSION["msg"] = "Alias: " . $alias . "erfolgreich hinzugefügt";
-                header("Location: ../");
-            } else {
-                $_SESSION["msg"] = "Upps, da ist irgendwas schiefgelaufen";
-                header("Location: ../");
-            }
-            $conn->close();
-        }
 ?>
 <body>
-<<form action="index.php" method="post">
-        <p>: <input type = "text" name = "domain" /></p>
-        <p><input type = "submit" name = "submit" value = "submit" /></p>
-    </form>
+<form action="index.php" method="post">
+    <p>Account:
+        <select name = "account">
+            <option value = "FALSE">-- Bitte auswählen --</option>
+                <?php
+                    $sql3 = "SELECT id, domain FROM domains";
+                    $result = $conn->query($sql3);
+                    while ($row = $result->fetch_assoc()){
+                        echo "<option value = '" . $row["domain"] . "'>" . $row["domain"] . "</option>";
+                    }
+                ?>
+        </select>
+    </p>
+    <p>Username: <input  type = "text" name = "username"></p>
+    <p>Domain:  <select name = "domain">
+        <option value = "FALSE">-- Bitte auswählen --</option>
+            <?php
+            $sql3 = "SELECT id, domain FROM domains";
+            $result = $conn->query($sql3);
+            while ($row = $result->fetch_assoc()){
+                echo "<option value = '" . $row["domain"] . "'>" . $row["domain"] . "</option>";
+            }
+            ?>
+        </select></p>
+     <p><input type = "submit" name = "submit" value = "submit" /></p>
+</form>
 </body>
 </html>

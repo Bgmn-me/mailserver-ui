@@ -11,7 +11,6 @@ require_once "./dbconnect.php";
 <meta charset = "utf8";>
 </head>
 <body>
-
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     if($_POST["salutation"] == FALSE){
@@ -75,8 +74,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         ];
         $password = "{BLF-CRYPT}" . password_hash($password, PASSWORD_BCRYPT, $options);
     }
-    
-    $edit = 1;
     $sqluser = "INSERT INTO users (username, password, salt, salutation, lastname, firstname, birthdate) VALUES ('" . $username . "','" . $password . "','" . $salt . "','" . $salutation . "','" . $lastname . "','" . $firstname . "','" . $birthdate . "')";
     if($conn->query($sqluser)){
         echo "Funktioniert";
@@ -85,28 +82,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
 }
 ?>
-<form name = "register" action = "./register.php" method = "POST">
+<form name = "register-form" action = "./register.php" method = "POST">
 <p>Anrede:  <select name = "salutation">
                 <option value = "FALSE">-- Bitte auswählen --</option>
                 <option value = "frau">Frau</option>
                 <option value = "herr">Herr</option>
             </select>
-<p>Vorname: <input type = "firstname" name = "firstname"> Nachname: <input type = "lastname" name = "lastname"></p>
+<p>Vorname: <input type = "text" name = "firstname"> Nachname: <input type = "text" name = "lastname"></p>
 <p>Geburtsdatum: <input type ="date" name = "birthdate"></p>
-<p>Username: <input type = "username" name = "username"></p>
-<!--<p>Domain:  <select name = "domain">
-            <option value = "FALSE">-- Bitte auswählen --</option>
-            <?php
-            /*$sql3 = "SELECT id, domain FROM domains";
-            $result = $conn->query($sql3);
-            while ($row = $result->fetch_assoc()){
-                echo "<option value = '" . $row["domain"] . "'>" . $row["domain"] . "</option>";
-            }*/
-            ?>
-            </select></p>-->
+<p>Username: <input type = "text" name = "username"></p>
 <p>Password: <input type = "password" name = "password"></p>
 <p>Password wiederholen: <input type = "password" name = "password2"></p>
-<input type = "submit" name = "submit" value = "Registrieren">
+<input type = "submit" name = "register" value = "Registrieren">
 </form>
 </body>
 </html>
