@@ -49,6 +49,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($_POST["birthdate"])) {
         $_SESSION["msg"] = "Bitte Geburtsdatum eingeben!";
         header("Location: ../register.php");
+    } else if (date($_POST["bday"]) < date("1970-01-01") || date($_POST["bday"]) > (date("Y") - 13) . date("-m-d")) {
+        echo date($_POST["bday"]) . ": is lower than " . date("1970-01-01") . "or higher than " . (date("Y")-13) . date("-m-d");
+        header("Location: ../register.php");
     } else {
         $birthdate = $_POST["birthdate"]; 
     }
